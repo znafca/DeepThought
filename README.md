@@ -10,14 +10,14 @@
 *  `pip3 install beautifulsoup4`
 *  `pip3 install python-telegram-bot --upgrade`
 
-* In order to run the tip-bot effectively, a Bitcoin-core based client is needed. For this git Artiqox Core is used , but any major alternate crypto-currency client could easily be incorperated. 
+* In order to run the tip-bot effectively, a Bitcoin-core based client is needed. For this git Artiqox Core is used , but any major alternate cryptocurrency client could easily be incorporated.
 
 ## Setup
 
 * Download the git
 `git clone https://github.com/artiqox/aiqbot-telegram`
 
-* Setup a bot with the user @BotFather through PM on Telegram, after going through a setup you will be given a bot token. Edit the command.py file and replace the parameter 'BOT_TOKEN' with the one you just recieved. 
+* Setup a bot with the user @BotFather through PM on Telegram, after going through a setup you will be given a bot token. Edit the command.py file and on line 13 replace the 'xxxxxxxx' with the bot token you just recieved from @BotFather. 
 
 *  Run the script 
 `python3 command.py`
