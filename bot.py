@@ -42,7 +42,7 @@ def balance(user,tweetId,options):
             uppsymb = "USD"
             decplace = 4
         core = "/home/osboxes/artiqox-ttbot/artiqox-1.1.2/artiqox-cli"
-        result = subprocess.run([core,"getbalance","TG-" + user.lower()],stdout=subprocess.PIPE)
+        result = subprocess.run([core,"getbalance","TT-" + user.lower()],stdout=subprocess.PIPE)
         clean = (result.stdout.strip()).decode("utf-8")
         balance  = float(clean)
         last_fiat = float(fiat_price)
@@ -60,7 +60,7 @@ def give(user,tweetId,amount,target,options):
     current_price_json = json.loads(json.dumps(market_data_json['market_data']))
     currency_json = json.loads(json.dumps(current_price_json['current_price']))
     core = "/home/osboxes/artiqox-ttbot/artiqox-1.1.2/artiqox-cli"
-    result = subprocess.run([core,"getbalance","TG-" + user.lower()],stdout=subprocess.PIPE)
+    result = subprocess.run([core,"getbalance","TT-" + user.lower()],stdout=subprocess.PIPE)
     balance = float((result.stdout.strip()).decode("utf-8"))
     if lowsymb in currency_json:
         fiat_price = json.dumps(currency_json[lowsymb])
@@ -91,26 +91,26 @@ def give(user,tweetId,amount,target,options):
     elif uppsymb == "AIQ":
         balance = str(balance)
         amount = str(amount)
-        tx = subprocess.run([core,"move","TG-" + user.lower(),"TG-" + target.lower(),amount_aiq],stdout=subprocess.PIPE)
+        tx = subprocess.run([core,"move","TT-" + user.lower(),"TT-" + target.lower(),amount_aiq],stdout=subprocess.PIPE)
         api.update_status('Hi @{1}, @{0} gave you {2} AIQ. {3}'.format(user, target, amount_aiq, addvert), tweetId)
     else:
         balance = str(balance)
         amount = str(amount)
         amount_aiq = str(round(amount_aiq,decplace))
-        tx = subprocess.run([core,"move","TG-" + user.lower(),"TG-" + target.lower(),amount_aiq],stdout=subprocess.PIPE)
+        tx = subprocess.run([core,"move","TT-" + user.lower(),"TT-" + target.lower(),amount_aiq],stdout=subprocess.PIPE)
         api.update_status('Hi @{1}, @{0} gave you {2} AIQ ≈ {3}{4}. {5}'.format(user, target, amount_aiq, uppsymb, amount, addvert), tweetId)
 
 def deposit(user,tweetId,options):
 
     if options == "qr":
         address = "/home/osboxes/artiqox-ttbot/artiqox-1.1.2/artiqox-cli"
-        result = subprocess.run([address,"getaccountaddress","TG-" + user.lower()],stdout=subprocess.PIPE)
+        result = subprocess.run([address,"getaccountaddress","TT-" + user.lower()],stdout=subprocess.PIPE)
         clean = (result.stdout.strip()).decode("utf-8")
         api.update_status('Hi @{0}, your depositing address is: {1} follow https://chart.googleapis.com/chart?cht=qr&chl=artiqox%3A{1}&chs=180x180&choe=UTF-8&chld=L|2 to get your QR code. {2}'.format(user, clean, addvert), tweetId)
 
     else:
         address = "/home/osboxes/artiqox-ttbot/artiqox-1.1.2/artiqox-cli"
-        result = subprocess.run([address,"getaccountaddress","TG-" + user.lower()],stdout=subprocess.PIPE)
+        result = subprocess.run([address,"getaccountaddress","TT-" + user.lower()],stdout=subprocess.PIPE)
         clean = (result.stdout.strip()).decode("utf-8")
         api.update_status('Hi @{0}, your depositing address is: {1} {2}'.format(user, clean, addvert), tweetId)
 
@@ -120,14 +120,14 @@ def withdraw(user,tweetId,amount,target):
     
     amount = float(amount)
     core = "/home/osboxes/artiqox-ttbot/artiqox-1.1.2/artiqox-cli"
-    result = subprocess.run([core,"getbalance","TG-" + user.lower()],stdout=subprocess.PIPE)
+    result = subprocess.run([core,"getbalance","TT-" + user.lower()],stdout=subprocess.PIPE)
     clean = (result.stdout.strip()).decode("utf-8")
     balance = float(clean)
     if balance < amount:
         api.update_status('Hi @{0}, you have insufficent funds. {1}'.format(user,addvert), tweetId)
     else:
         amount = str(amount)
-        tx = subprocess.run([core,"sendfrom","TG-" + user.lower(),address,amount],stdout=subprocess.PIPE)
+        tx = subprocess.run([core,"sendfrom","TT-" + user.lower(),address,amount],stdout=subprocess.PIPE)
         api.update_status('@{0} has successfully withdrew to address: {1} of {2} AIQ. {3}'.format(user,address,amount,addvert), tweetId)
 
 def help(user,tweetId,options):
