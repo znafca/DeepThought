@@ -76,7 +76,6 @@ def give(user,tweetId,amount,target,options):
     last_fiat = float(fiat_price)
     fiat_balance = balance * last_fiat
     fiat_balance = str(round(fiat_balance,decplace))
-    print(amount)
     amount = float(amount)
     amount_aiq = amount / last_fiat
     amount_aiq = float(amount_aiq)   
@@ -134,11 +133,11 @@ def help(user,tweetId,options):
 
     if options == "pl":
 
-        api.update_status('Hi @{0}, give $AIQ by simply replying to anybody with "giveaiq 1.5" to give him 1.5 AIQ. You can also tweet "giveaiq @user 1.5" to give @user 1.5 AIQ. Tweet "giveaiq deposit" to see your deposit address, "giveaiq balance" to see your current balance.'.format(user), tweetId)
+        api.update_status('Hi @{0}, give $AIQ by simply replying to anybody with "@{1} 1.5" to give him 1.5 AIQ. You can also tweet "@{1} @user 1.5" to give @user 1.5 AIQ. Tweet "@{1} deposit" to see your deposit address, "@{1} balance" to see your current balance.'.format(user,bot_username), tweetId)
 
     else:
 
-        api.update_status('Hi @{0}, give AIQ by simply replying to anybody with "giveaiq 1.5" to give him 1.5 AIQ. You can also tweet "giveaiq @user 1.5" to give @user 1.5 AIQ. Tweet "giveaiq deposit" to see your deposit address, "giveaiq balance" to see your current balance.'.format(user), tweetId)
+        api.update_status('Hi @{0}, give $AIQ by simply replying to anybody with "@{1} 1.5" to give him 1.5 AIQ. You can also tweet "@{1} @user 1.5" to give @user 1.5 AIQ. Tweet "@{1} deposit" to see your deposit address, "@{1} balance" to see your current balance.'.format(user,bot_username), tweetId)
 
 # create a class inheriting from the tweepy  StreamListener
 class BotStreamer(tweepy.StreamListener):
