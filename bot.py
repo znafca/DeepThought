@@ -18,8 +18,8 @@ auth = OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_secret)
 api = tweepy.API(auth)
 
-addvert = 'Give and receive #cryptocurrency $AIQ from @artiqox - just tweet "giveaiq help" for more info. #AIQ #BTC'
 bot_username = 'GiveAIQ'
+addvert = 'Give and receive #cryptocurrency $AIQ from @artiqox - just tweet "'+bot_username+' help" for more info. #AIQ #BTC'
 
 def balance(user,tweetId,options):
     lowsymb = options.lower()
