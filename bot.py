@@ -90,6 +90,7 @@ def give(user,tweetId,amount,target,options):
     elif uppsymb == "AIQ":
         balance = str(balance)
         amount = str(amount)
+        amount_aiq = str(round(amount_aiq,decplace))
         tx = subprocess.run([core,"move","TT-" + user.lower(),"TT-" + target.lower(),amount_aiq],stdout=subprocess.PIPE)
         api.update_status('Hi @{1}, @{0} gave you {2} AIQ. {3}'.format(user, target, amount_aiq, addvert), tweetId)
     else:
