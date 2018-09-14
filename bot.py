@@ -131,13 +131,25 @@ def withdraw(user,tweetId,amount,target):
 
 def help(user,tweetId,options):
 
-    if options == "pl":
+    if options == "give":
 
-        api.update_status('Hi @{0}, give $AIQ by simply replying to anybody with "@{1} 1.5" to give him 1.5 AIQ. You can also tweet "@{1} @user 1.5" to give @user 1.5 AIQ. Tweet "@{1} deposit" to see your deposit address, "@{1} balance" to see your current balance.'.format(user,bot_username), tweetId)
+        api.update_status('Hi @{0}, give money replying to any tweet with "@{1} 1.5 USD" to give it\'s author $AIQ worth of 1.5 USD (use any ticker like EUR, GBP, BTC, ... if no matching currency amount will be in AIQ). You can also tweet "@{1} @user 1.5" to give @user 1.5 AIQ.'.format(user,bot_username), tweetId)
+
+    elif options == "deposit":
+        
+        api.update_status('Hi @{0}, Tweet "@{1} deposit" to see your deposit address, "@{1} deposit qr" shows the address and QR code.'.format(user,bot_username), tweetId)
+
+    elif options == "balance":
+        
+        api.update_status('Hi @{0}, Tweet "@{1} balance" to see your current balance, "@{1} balance EUR" shows your balance in EUR.'.format(user,bot_username), tweetId)
+
+    elif options == "withdraw":
+        
+        api.update_status('Hi @{0}, Tweet "@{1} withdraw xyz 20" to withdraw 20 AIQ to wallet address xyz.'.format(user,bot_username), tweetId)
 
     else:
 
-        api.update_status('Hi @{0}, give $AIQ by simply replying to anybody with "@{1} 1.5" to give him 1.5 AIQ. You can also tweet "@{1} @user 1.5" to give @user 1.5 AIQ. Tweet "@{1} deposit" to see your deposit address, "@{1} balance" to see your current balance.'.format(user,bot_username), tweetId)
+        api.update_status('Hi @{0}, give money by simply replying to any tweet with "@{1} 1.5 USD" to give it\'s author $AIQ worth of 1.5 USD. Check other commands by tweeting "@{1} help give", "@{1} help balance", "@{1} help deposit" or "@{1} help withdraw"'.format(user,bot_username), tweetId)
 
 # create a class inheriting from the tweepy  StreamListener
 class BotStreamer(tweepy.StreamListener):
@@ -146,14 +158,14 @@ class BotStreamer(tweepy.StreamListener):
         d = json.loads(data)
         user = d['user']['screen_name']
         tweetId = d['id']
-
+        print(data)
         # give in case when user replies to somebody        
         pattern = r".*@" + re.escape(bot_username) + r" ([\d]+[\.]{0,1}[\d]*)\s*([a-zA-Z\d]{0,3}).*"
         match = re.match(pattern,d['text'])
-        if d['in_reply_to_screen_name'] != "None" and user != bot_username and match:
+        if d['in_reply_to_screen_name'] != "None" and user != bot_username and user != "Znafca1" and match:
             give(user,tweetId,match.group(1),d['in_reply_to_screen_name'],match.group(2))
         # give in case when user types giveaiq @targetUser amount
-        pattern = r".*@" + re.escape(bot_username) + r" @([\w]+)\s*([\d]*[\.]{0,1}[\d]*)\s*([a-zA-Z\d]{0,3}).*"
+        pattern = r".*@" + re.escape(bot_username) + r" @([\w]+)\s*([\d]+[\.]{0,1}[\d]*)\s*([a-zA-Z\d]{0,3}).*"
         match = re.match(pattern,d['text'])
         if match and user != bot_username:
             give(user,tweetId,match.group(2),match.group(1),match.group(3))
