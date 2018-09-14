@@ -1,8 +1,5 @@
 # bot.py
 
-#import random
-#from io import BytesIO
-
 import requests
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
